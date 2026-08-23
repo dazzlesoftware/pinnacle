@@ -1,0 +1,40 @@
+name: Content
+description: Options for displaying Content in the view
+type: archive
+
+form:
+  fields:
+    enabled:
+      type: input.checkbox
+      label: Enabled
+      description: Display content.
+      default: 1
+
+    type:
+      type: select.select
+      label: Content Type
+      description: What post should display by default
+      default: content
+      options:
+        content: Content
+        excerpt: Excerpt
+        gexcerpt: Generated Excerpt
+
+    gexcerpt-length:
+        type: input.number
+        label: Excerpt Length
+        description: Length of generated excerpt (in words)
+        default: 50
+        min: 1
+
+    columns:
+      type: select.select
+      label: Post Columns
+      description: In how many columns should the posts appear
+      default: col-12
+      options:
+        col-12: 1 Column
+        col-6: 2 Columns
+        col-4: 3 Columns
+        col-3: 4 Columns
+        col-2: 5 Columns

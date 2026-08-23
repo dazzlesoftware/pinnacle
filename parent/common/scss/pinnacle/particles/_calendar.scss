@@ -1,0 +1,87 @@
+// Theme color/branding layer for the calendar particle. Structure and behavior
+// live in the shared core particle — see engines/common/nucleus/scss/nucleus/_calendar.scss.
+.g-calendar-particle {
+    .g-calendar {
+        .clndr {
+            @include responsive-font($responsive-font-size, $core-font-size, false, false);
+
+            .controls {
+                @include responsive-font($responsive-font-size + 0.15, $core-font-size + 0.15, false, false);
+                background-color: $accent-color-1;
+                color: $white;
+
+                .clndr-previous-button, .clndr-next-button {
+                    &:hover {
+                        background-color: darken($accent-color-1, 10%);
+                    }
+                }
+
+                .month-year {
+                    font-weight: $font-weight-bold;
+                }
+            }
+
+            .days-container {
+                .days {
+                    background-color: $white;
+
+                    .day, .empty {
+                        color: $base-text-color;
+
+                        &.today {
+                            color: $black;
+                            font-weight: $font-weight-medium;
+                        }
+
+                        &.event {
+                            background-color: lighten($accent-color-1, 5%);
+                            color: transparentize(darken($accent-color-1, 70%), 0.2);
+
+                            &:hover {
+                                background-color: $accent-color-1;
+                            }
+                        }
+                    }
+
+                    .headers {
+                        .day-header {
+                            color: fade-out(darken($accent-color-1, 40%), 0.60);
+                        }
+                    }
+                }
+
+                .events {
+                    .event-header {
+                        background-color: $accent-color-1;
+                        color: $white;
+                        font-weight: $font-weight-medium;
+                    }
+
+                    .x-button {
+                        color: $white;
+
+                        &:hover {
+                            color: fade-out($white, 0.25);
+                        }
+                    }
+
+                    .events-list {
+                        .event {
+                            a {
+                                color: $base-text-color;
+
+                                &:hover {
+                                    color: lighten($base-text-color, 10%);
+                                }
+                            }
+
+                            .event-desc {
+                                @include responsive-font($responsive-font-size - 0.3, $core-font-size, false, false);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

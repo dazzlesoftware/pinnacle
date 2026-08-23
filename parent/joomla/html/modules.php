@@ -1,0 +1,64 @@
+<?php
+
+declare(strict_types=1);
+
+/**
+ * @package   Genesis
+ * @author    Dazzle Software https://dazzlesoftware.org
+ * @copyright Copyright (C) 2026 Dazzle Software, LLC
+ * @license   GNU/GPLv3 and later
+ */
+
+defined('_JEXEC') or die;
+
+use Joomla\Utilities\ArrayHelper;
+
+/**
+ * Genesis module chrome.
+ *
+ * @param object $module  The module object.
+ * @param object $params  The module parameters.
+ * @param array  $attribs The module attributes.
+ */
+function modChrome_genesis(object $module, object &$params, array &$attribs): void
+{
+    if ((string) $module->content === '') {
+        return;
+    }
+
+    $moduleTag              = htmlspecialchars($params->get('module_tag', 'div'), ENT_QUOTES, 'UTF-8');
+    $moduleAttribs          = [];
+    $moduleAttribs['class'] = 'moduletable ' . htmlspecialchars($params->get('moduleclass_sfx', ''), ENT_QUOTES, 'UTF-8');
+    $bootstrapSize          = (int) $params->get('bootstrap_size', 0);
+    $moduleAttribs['class'] .= $bootstrapSize !== 0 ? ' col-md-' . $bootstrapSize : '';
+    $headerTag              = htmlspecialchars($params->get('header_tag', 'h3'), ENT_QUOTES, 'UTF-8');
+    $headerClass            = htmlspecialchars($params->get('header_class', 'g-title'), ENT_QUOTES, 'UTF-8');
+    $headerAttribs          = [];
+
+    if ($headerClass !== '') {
+        $headerAttribs['class'] = $headerClass;
+    }
+
+    if (!empty($attribs['class'])) {
+        $moduleAttribs['class'] .= ' ' . htmlspecialchars($attribs['class'], ENT_QUOTES, 'UTF-8');
+    }
+
+    if ($moduleTag !== 'div') {
+        if ((bool) $module->showtitle) {
+            $moduleAttribs['aria-labelledby'] = 'mod-' . $module->id;
+            $headerAttribs['id']              = 'mod-' . $module->id;
+        } else {
+            $moduleAttribs['aria-label'] = htmlspecialchars($module->title, ENT_QUOTES, 'UTF-8');
+        }
+    }
+
+    $header = '<' . $headerTag . ' ' . ArrayHelper::toString($headerAttribs) . '>' . $module->title . '</' . $headerTag . '>';
+    ?>
+    <<?php echo $moduleTag; ?> <?php echo ArrayHelper::toString($moduleAttribs); ?>>
+        <?php if ((bool) $module->showtitle) : ?>
+            <?php echo $header; ?>
+        <?php endif; ?>
+        <?php echo $module->content; ?>
+    </<?php echo $moduleTag; ?>>
+    <?php
+}
